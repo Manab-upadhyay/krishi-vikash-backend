@@ -72,7 +72,7 @@ export default class auth{
                 if (!isMatch) return res.status(400).json({ error: "Invalid email or password" });
         
               
-                const token = GenerateJwtToken(farmer);
+                const token = GenerateJwtToken(farmer,req,res);
         
                 
                
@@ -83,7 +83,7 @@ export default class auth{
             }
         }
     
-    async Logout(){
+    async Logout(req,res){
         res.cookie("token", "", { httpOnly: true, expires: new Date(0) });
         res.json({ message: "Logged out successfully" });
     }

@@ -1,9 +1,9 @@
-import jwt from "json-web-token"
+import jwt from "jsonwebtoken"
 
-const JWT_SECRET =  "Secretkey123";
+const JWT_SECRET =  process.env.JWT_SECRET;
 
 export function verifyToken(req, res, next) {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
         return res.status(401).json({ error: "Unauthorized. No token provided." });
