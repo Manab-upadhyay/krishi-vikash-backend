@@ -16,7 +16,7 @@ export default class Crops{
     async getcrops(req,res){
         try {
             const crops = await Crop.find();
-          
+          console.log(crops)
             res.status(201).json({ message: "Crop details", crop: crops });
             
         } catch (error) {

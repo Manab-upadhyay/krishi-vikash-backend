@@ -8,7 +8,9 @@ import weatherroute from "./routes/weather.js";
 import authrouter from "./routes/auth.js";
 import { verifyToken } from "./middleware/middleware.js";
 import cookieParser from "cookie-parser";
-require("dotenv").config()
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express();
 

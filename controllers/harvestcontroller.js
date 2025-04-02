@@ -74,7 +74,7 @@ export default class HarvestController {
               
            
 
-            const postHarvests = await PostHarvest.find({preharvest:crop._id.toString()})
+            const postHarvests = await PostHarvest.find({crop:crop._id.toString()})
 
             res.status(200).json({ message: " Post-Harvest details fetched successfully", postHarvests });
         } catch (error) {
