@@ -116,10 +116,10 @@ export default class HarvestController {
             const { post_harvest, storage_guidelines, subsidy_provider, processing_facilities } = req.body;
 
             // Check if post_harvest ID exists
-            const postHarvest = await PostHarvest.findById(post_harvest);
-            if (!postHarvest) {
-                return res.status(404).json({ error: "Post-Harvest data not found" });
-            }
+            // const crop = await PostHarvest.findById(post_harvest);
+            // if (!postHarvest) {
+            //     return res.status(404).json({ error: "Post-Harvest data not found" });
+            // }
 
             const newProcessingData = new PostHarvestProcessing({
                 post_harvest,
@@ -196,17 +196,17 @@ async getPostHarvestProcessing(req, res) {
         const cropId = crop._id;
 
         // 🔍 Step 2: Find Post-Harvest Data linked to Crop ID
-        const postHarvest = await PostHarvest.findOne({ crop: cropId.toString() });
+        const postHarvest = await PostHarvestProcessing.findOne({ crop: cropId.toString() });
 
         if (!postHarvest) {
             return res.status(404).json({ error: "❌ No post-harvest data found for this crop" });
         }
 
         // Get Post-Harvest ID
-        const postHarvestId = postHarvest._id;
+        // const postHarvestId = postHarvest._id;
 
-        // 🔍 Step 3: Fetch Processing Data related to Post-Harvest ID
-        const processingData = await PostHarvestProcessing.find({ post_harvest: postHarvestId.toString() });
+        // // 🔍 Step 3: Fetch Processing Data related to Post-Harvest ID
+        // const processingData = await PostHarvestProcessing.find({ post_harvest: postHarvestId.toString() });
 
         if (!processingData.length) {
             return res.status(404).json({ error: "❌ No processing data found for this crop" });
@@ -214,7 +214,7 @@ async getPostHarvestProcessing(req, res) {
 
         res.status(200).json({
             message: "✅ Processing data fetched successfully",
-          processingData
+          postHarvest
         });
 
     } catch (error) {

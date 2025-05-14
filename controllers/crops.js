@@ -5,7 +5,7 @@ export default class Crops{
         try {
             const newcrop = new Crop(req.body);
             await newcrop.save();
-            res.status(201).json({ message: "Farmer registered successfully", crops: newcrop });
+            res.status(201).json({ message: "crop saved successfully", crops: newcrop });
             
         } catch (error) {
             console.log("error", error)
