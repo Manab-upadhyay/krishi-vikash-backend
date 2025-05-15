@@ -140,22 +140,24 @@ export default class HarvestController {
   
 async getPostHarvestMarket(req, res) {
     try {
+        console.log("inside")
         const { cropName } = req.query;
-
+console.log("crp",cropName)
         // 🔍 Step 1: Find the Crop by Name
         const crop = await Crop.findOne({ name: { $regex: cropName, $options: "i" } });
-
+       
         if (!crop) {
             return res.status(404).json({ error: "❌ No crop found with this name" });
         }
 
         // Get Crop ID
         const cropId = crop._id;
-
+console.log(cropId)
         // 🔍 Step 2: Find Post-Harvest Data linked to Crop ID
         const postHarvest = await PostHarvest.findOne({ crop: cropId.toHexString() });
 
         if (!postHarvest) {
+            console.log("inside")
             return res.status(404).json({ error: "❌ No post-harvest data found for this crop" });
         }
 
@@ -193,11 +195,12 @@ async getPostHarvestProcessing(req, res) {
         }
 
         // Get Crop ID
-        const cropId = crop._id;
+        const cropId = crop._id
+        console.log(cropId)
 
         // 🔍 Step 2: Find Post-Harvest Data linked to Crop ID
-        const postHarvest = await PostHarvestProcessing.findOne({ crop: cropId.toString() });
-
+        const postHarvest = await PostHarvestProcessing.find({ post_harvest: cropId });
+console.log(postHarvest)
         if (!postHarvest) {
             return res.status(404).json({ error: "❌ No post-harvest data found for this crop" });
         }
@@ -208,9 +211,9 @@ async getPostHarvestProcessing(req, res) {
         // // 🔍 Step 3: Fetch Processing Data related to Post-Harvest ID
         // const processingData = await PostHarvestProcessing.find({ post_harvest: postHarvestId.toString() });
 
-        if (!processingData.length) {
-            return res.status(404).json({ error: "❌ No processing data found for this crop" });
-        }
+        // if (!processingData.length) {
+        //     return res.status(404).json({ error: "❌ No processing data found for this crop" });
+        // }
 
         res.status(200).json({
             message: "✅ Processing data fetched successfully",
